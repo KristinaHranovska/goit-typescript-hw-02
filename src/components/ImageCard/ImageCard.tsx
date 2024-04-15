@@ -1,4 +1,4 @@
-import { Image } from "../ImageGallery/ImageGallery";
+import { Image } from "../App/App.types";
 import css from "./ImageCard.module.css";
 
 type Props = {
