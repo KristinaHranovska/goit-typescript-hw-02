@@ -3,9 +3,8 @@ import css from "./Loader.module.css";
 
 const Loader = () => {
   return (
-    <div className={css.container}>
+    <div className={`${css.container} ${css.loader}`}>
       <Hourglass
-        className={css.loader}
         visible={true}
         height="80"
         width="80"
