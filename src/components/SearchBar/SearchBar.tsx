@@ -1,9 +1,12 @@
-import { Field, Form, Formik } from "formik";
-import PropTypes from "prop-types";
+import { Field, Form, Formik, FormikHelpers, FormikValues } from "formik";
 import css from "./SearchBar.module.css";
 
-const SearchBar = ({ onSubmit }) => {
-  const handleSubmit = (values, actions) => {
+type Props = {
+  onSubmit: (value: string) => void;
+}
+
+const SearchBar = ({ onSubmit }: Props) => {
+  const handleSubmit = (values: FormikValues, actions: FormikHelpers<any>): void => {
     const formattedSearch = values.search.trim().toLowerCase();
     onSubmit(formattedSearch);
     actions.resetForm();
@@ -30,10 +33,6 @@ const SearchBar = ({ onSubmit }) => {
       </header>
     </>
   );
-};
-
-SearchBar.propTypes = {
-  onSubmit: PropTypes.func,
 };
 
 export default SearchBar;
