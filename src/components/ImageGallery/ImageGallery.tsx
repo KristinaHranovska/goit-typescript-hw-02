@@ -1,10 +1,31 @@
+import { MouseEvent } from "react";
 import ImageCard from "../ImageCard/ImageCard";
-import PropTypes from "prop-types";
 import css from "./ImageGallery.module.css";
 
-const ImageGallery = ({ imageList, openModal }) => {
-  const imageClick = (event) => {
-    const imgItem = event.target.closest("li");
+interface Image {
+  id: string;
+  alt_description: string;
+  likes: number;
+  urls: {
+    small: string;
+  }
+  user: {
+    name: string;
+    social: {
+      portfolio_url: string;
+    }
+  }
+};
+
+type Props = {
+  imageList: Image[];
+  openModal: (image: Image) => void;
+}
+
+const ImageGallery = ({ imageList, openModal }: Props) => {
+  console.log(imageList);
+  const imageClick = (event: MouseEvent<HTMLUListElement>): void => {
+    const imgItem = (event.target as Element).closest("li");
     if (imgItem) {
       const imgID = imgItem.dataset.id;
       const clickedImageItem = imageList.find((image) => image.id === imgID);
@@ -26,15 +47,6 @@ const ImageGallery = ({ imageList, openModal }) => {
       )}
     </section>
   );
-};
-
-ImageGallery.propTypes = {
-  imageList: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-    })
-  ),
-  openModal: PropTypes.func,
 };
 
 export default ImageGallery;
