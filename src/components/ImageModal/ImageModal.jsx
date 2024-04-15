@@ -19,6 +19,8 @@ const ImageModal = ({ isOpen, onCloseModal, image }) => {
     }
   }, [isOpen]);
 
+  const checkValue = Object.keys(image).length > 0;
+
   return (
     <Modal
       overlayClassName={css.backdrop}
@@ -29,7 +31,7 @@ const ImageModal = ({ isOpen, onCloseModal, image }) => {
       <button className={css.closeButton} onClick={onCloseModal}>
         <RiCloseLine size="40" />
       </button>
-      {image && (
+      {checkValue && (
         <div className={css.containerModal}>
           <div className={css.imgContainer}>
             <img

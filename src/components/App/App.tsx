@@ -14,29 +14,42 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import ImageModal from "../ImageModal/ImageModal";
 
 function App() {
-  const [images, setImages] = useState([]); // Стан для зберігання списку зображень
-  const [page, setPage] = useState(1); // Стан для зберігання поточної сторінки результатів
-  const [totalPages, setTotalPages] = useState(1); // Стан для зберігання загальної кількості сторінок результатів
-  const [search, setSearch] = useState(""); // Стан для зберігання поточного пошукового запиту
-  const [error, setError] = useState(false); // Стан для відображення помилки
-  const [loading, setLoading] = useState(false); // Стан для відображення завантаження основного контенту
-  const [loadingMore, setLoadingMore] = useState(false); // Стан для відображення завантаження додаткового контенту
-  const [isSearching, setIsSearching] = useState(false); // Стан для відображення процесу пошуку нових зображень
-  const [selectedImage, setSelectedImage] = useState(null); // Стан для зберігання вибраного зображення для модального вікна
-  const [modalIsOpen, setModalIsOpen] = useState(false); // Стан для відображення/приховування модального вікна
+  const [images, setImages] = useState<[]>([]); // Стан для зберігання списку зображень
+  const [page, setPage] = useState<number>(1); // Стан для зберігання поточної сторінки результатів
+  const [totalPages, setTotalPages] = useState<number>(1); // Стан для зберігання загальної кількості сторінок результатів
+  const [search, setSearch] = useState<string>(""); // Стан для зберігання поточного пошукового запиту
+  const [error, setError] = useState<boolean>(false); // Стан для відображення помилки
+  const [loading, setLoading] = useState<boolean>(false); // Стан для відображення завантаження основного контенту
+  const [loadingMore, setLoadingMore] = useState<boolean>(false); // Стан для відображення завантаження додаткового контенту
+  const [isSearching, setIsSearching] = useState<boolean>(false); // Стан для відображення процесу пошуку нових зображень
+  const [selectedImage, setSelectedImage] = useState<object>({}); // Стан для зберігання вибраного зображення для модального вікна
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false); // Стан для відображення/приховування модального вікна
 
   useEffect(() => {
     Modal.setAppElement("#root");
   }, []);
 
-  const handleSearch = async (searchQuery) => {
+  interface ImageData {
+    total_pages: number;
+    total: number;
+    results: [];
+  }
+
+
+  const handleSearch = async (searchQuery: string): Promise<void> => {
     try {
       setLoading(true);
       setIsSearching(true);
       setImages([]);
       setPage(1);
       setSearch(searchQuery);
-      const dataImg = await getImagesUnplash(searchQuery, 1);
+
+      const dataImg: ImageData | undefined = await getImagesUnplash(searchQuery, 1);
+
+      if (!dataImg) {
+        throw new Error("No data received from the API");
+      }
+
       setTotalPages(dataImg.total_pages);
       setImages(dataImg.results);
 
@@ -61,12 +74,18 @@ function App() {
     }
   };
 
-  const handleLoadMore = async () => {
+  const handleLoadMore = async (): Promise<void> => {
     try {
       setLoadingMore(true);
       const nextPage = page + 1;
-      const dataImages = await getImagesUnplash(search, nextPage);
-      setImages((prevImages) => {
+      const dataImages: ImageData | undefined = await getImagesUnplash(search, nextPage);
+
+      setImages((prevImages: []): [] => {
+        console.log(prevImages);
+        if (!dataImages) {
+          throw new Error("No data received from the API");
+        }
+
         return [...prevImages, ...dataImages.results];
       });
       setPage(nextPage);
@@ -77,15 +96,15 @@ function App() {
     }
   };
 
-  const isVisible = () => {
+  const isVisible = (): boolean => {
     return totalPages !== 0 && totalPages !== page && !loadingMore;
   };
 
-  const openModal = (image) => {
+  const openModal = (image: object): void => {
     setSelectedImage(image);
     setModalIsOpen(true);
   };
-  const closeModal = () => setModalIsOpen(false);
+  const closeModal = (): void => setModalIsOpen(false);
 
   return (
     <>
