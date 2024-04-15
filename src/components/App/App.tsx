@@ -14,6 +14,12 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import ImageModal from "../ImageModal/ImageModal";
 import { Image } from "./App.types";
 
+interface ImageData {
+  total_pages: number;
+  total: number;
+  results: [];
+}
+
 function App() {
   const [images, setImages] = useState<[]>([]); // Стан для зберігання списку зображень
   const [page, setPage] = useState<number>(1); // Стан для зберігання поточної сторінки результатів
@@ -29,13 +35,6 @@ function App() {
   useEffect(() => {
     Modal.setAppElement("#root");
   }, []);
-
-  interface ImageData {
-    total_pages: number;
-    total: number;
-    results: [];
-  }
-
 
   const handleSearch = async (searchQuery: string): Promise<void> => {
     try {
