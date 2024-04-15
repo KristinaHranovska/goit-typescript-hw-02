@@ -1,21 +1,7 @@
 import { MouseEvent } from "react";
 import ImageCard from "../ImageCard/ImageCard";
 import css from "./ImageGallery.module.css";
-
-interface Image {
-  id: string;
-  alt_description: string;
-  likes: number;
-  urls: {
-    small: string;
-  }
-  user: {
-    name: string;
-    social: {
-      portfolio_url: string;
-    }
-  }
-};
+import { Image } from "../App/App.types";
 
 type Props = {
   imageList: Image[];

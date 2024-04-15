@@ -1,19 +1,8 @@
+import { Image } from "../ImageGallery/ImageGallery";
 import css from "./ImageCard.module.css";
 
 type Props = {
-  imageItem: {
-    alt_description: string;
-    likes: number;
-    urls: {
-      small: string;
-    }
-    user: {
-      name: string;
-      social: {
-        portfolio_url: string;
-      }
-    }
-  }
+  imageItem: Image;
 }
 
 const ImageCard = ({

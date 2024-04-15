@@ -22,7 +22,7 @@ function App() {
   const [loading, setLoading] = useState<boolean>(false); // Стан для відображення завантаження основного контенту
   const [loadingMore, setLoadingMore] = useState<boolean>(false); // Стан для відображення завантаження додаткового контенту
   const [isSearching, setIsSearching] = useState<boolean>(false); // Стан для відображення процесу пошуку нових зображень
-  const [selectedImage, setSelectedImage] = useState<object>({}); // Стан для зберігання вибраного зображення для модального вікна
+  const [selectedImage, setSelectedImage] = useState<[]>([]); // Стан для зберігання вибраного зображення для модального вікна
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false); // Стан для відображення/приховування модального вікна
 
   useEffect(() => {
@@ -99,7 +99,7 @@ function App() {
     return totalPages !== 0 && totalPages !== page && !loadingMore;
   };
 
-  const openModal = (image: object): void => {
+  const openModal = (image: []): void => {
     setSelectedImage(image);
     setModalIsOpen(true);
   };

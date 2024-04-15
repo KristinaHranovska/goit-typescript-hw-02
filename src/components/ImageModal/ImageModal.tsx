@@ -4,13 +4,20 @@ import { format } from "date-fns";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import css from "./ImageModal.module.css";
 import { useEffect } from "react";
-import PropTypes from "prop-types";
+import { Image } from "../App/App.types";
 
-const formatDate = (dateString) => {
-  return format(new Date(dateString), "MMMM dd yyyy");
+const formatDate = <T extends string>(date: T): string => {
+  return format(new Date(date), "MMMM dd yyyy");
 };
 
-const ImageModal = ({ isOpen, onCloseModal, image }) => {
+type Props = {
+  isOpen: boolean;
+  image: Image;
+  onCloseModal: () => void;
+}
+
+const ImageModal = ({ isOpen, onCloseModal, image }: Props) => {
+
   useEffect(() => {
     if (isOpen) {
       disableBodyScroll(document.body);
@@ -20,7 +27,6 @@ const ImageModal = ({ isOpen, onCloseModal, image }) => {
   }, [isOpen]);
 
   const checkValue = Object.keys(image).length > 0;
-
   return (
     <Modal
       overlayClassName={css.backdrop}
@@ -59,12 +65,13 @@ const ImageModal = ({ isOpen, onCloseModal, image }) => {
               <p className={css.description}>{image.description}</p>
             )}
             <ul className={css.tagsList}>
-              {image.tags.map((tag, index) => (
+              {image.tags.map((tag: { title: string }, index: number) => (
                 <li className={css.tagItem} key={index}>
                   &#35;{tag.title}
                 </li>
               ))}
             </ul>
+
             <p className={css.created}>
               Created on: {formatDate(image.created_at)}
             </p>
@@ -76,32 +83,6 @@ const ImageModal = ({ isOpen, onCloseModal, image }) => {
       )}
     </Modal>
   );
-};
-
-ImageModal.propTypes = {
-  isOpen: PropTypes.bool,
-  onCloseModal: PropTypes.func,
-  image: PropTypes.shape({
-    urls: PropTypes.shape({
-      regular: PropTypes.string,
-    }),
-    alt_description: PropTypes.string,
-    user: PropTypes.shape({
-      social: PropTypes.shape({
-        portfolio_url: PropTypes.string,
-      }),
-      name: PropTypes.string,
-      location: PropTypes.string,
-    }),
-    likes: PropTypes.number,
-    description: PropTypes.string,
-    tags: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string,
-      })
-    ),
-    created_at: PropTypes.string,
-  }),
 };
 
 export default ImageModal;
