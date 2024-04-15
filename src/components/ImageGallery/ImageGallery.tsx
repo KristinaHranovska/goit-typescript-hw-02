@@ -9,7 +9,6 @@ type Props = {
 }
 
 const ImageGallery = ({ imageList, openModal }: Props) => {
-  console.log(imageList);
   const imageClick = (event: MouseEvent<HTMLUListElement>): void => {
     const imgItem = (event.target as Element).closest("li");
     if (imgItem) {

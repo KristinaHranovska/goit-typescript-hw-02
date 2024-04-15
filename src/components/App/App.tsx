@@ -12,6 +12,7 @@ import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import LoaderMore from "../Loader/LoaderMore";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import ImageModal from "../ImageModal/ImageModal";
+import { Image } from "./App.types";
 
 function App() {
   const [images, setImages] = useState<[]>([]); // Стан для зберігання списку зображень
@@ -22,7 +23,7 @@ function App() {
   const [loading, setLoading] = useState<boolean>(false); // Стан для відображення завантаження основного контенту
   const [loadingMore, setLoadingMore] = useState<boolean>(false); // Стан для відображення завантаження додаткового контенту
   const [isSearching, setIsSearching] = useState<boolean>(false); // Стан для відображення процесу пошуку нових зображень
-  const [selectedImage, setSelectedImage] = useState<[]>([]); // Стан для зберігання вибраного зображення для модального вікна
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null); // Стан для зберігання вибраного зображення для модального вікна
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false); // Стан для відображення/приховування модального вікна
 
   useEffect(() => {
@@ -99,7 +100,7 @@ function App() {
     return totalPages !== 0 && totalPages !== page && !loadingMore;
   };
 
-  const openModal = (image: []): void => {
+  const openModal = (image: Image): void => {
     setSelectedImage(image);
     setModalIsOpen(true);
   };

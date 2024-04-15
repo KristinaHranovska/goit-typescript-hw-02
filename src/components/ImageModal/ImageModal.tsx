@@ -12,12 +12,11 @@ const formatDate = <T extends string>(date: T): string => {
 
 type Props = {
   isOpen: boolean;
-  image: Image;
+  image: Image | null;
   onCloseModal: () => void;
 }
 
 const ImageModal = ({ isOpen, onCloseModal, image }: Props) => {
-
   useEffect(() => {
     if (isOpen) {
       disableBodyScroll(document.body);
@@ -26,7 +25,6 @@ const ImageModal = ({ isOpen, onCloseModal, image }: Props) => {
     }
   }, [isOpen]);
 
-  const checkValue = Object.keys(image).length > 0;
   return (
     <Modal
       overlayClassName={css.backdrop}
@@ -37,7 +35,7 @@ const ImageModal = ({ isOpen, onCloseModal, image }: Props) => {
       <button className={css.closeButton} onClick={onCloseModal}>
         <RiCloseLine size="40" />
       </button>
-      {checkValue && (
+      {image && (
         <div className={css.containerModal}>
           <div className={css.imgContainer}>
             <img
