@@ -1,5 +1,20 @@
 import css from "./ImageCard.module.css";
-import PropTypes from "prop-types";
+
+type Props = {
+  imageItem: {
+    alt_description: string;
+    likes: number;
+    urls: {
+      small: string;
+    }
+    user: {
+      name: string;
+      social: {
+        portfolio_url: string;
+      }
+    }
+  }
+}
 
 const ImageCard = ({
   imageItem: {
@@ -11,7 +26,7 @@ const ImageCard = ({
       social: { portfolio_url },
     },
   },
-}) => {
+}: Props) => {
   return (
     <div className={css.galleryThumb}>
       <img
@@ -35,22 +50,6 @@ const ImageCard = ({
       </div>
     </div>
   );
-};
-
-ImageCard.propTypes = {
-  imageItem: PropTypes.shape({
-    alt_description: PropTypes.string,
-    likes: PropTypes.number,
-    urls: PropTypes.shape({
-      small: PropTypes.string,
-    }),
-    user: PropTypes.shape({
-      name: PropTypes.string,
-      social: PropTypes.shape({
-        portfolio_url: PropTypes.string,
-      }),
-    }),
-  }),
 };
 
 export default ImageCard;
