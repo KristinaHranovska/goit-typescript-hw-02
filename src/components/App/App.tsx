@@ -81,7 +81,6 @@ function App() {
       const dataImages: ImageData | undefined = await getImagesUnplash(search, nextPage);
 
       setImages((prevImages: []): [] => {
-        console.log(prevImages);
         if (!dataImages) {
           throw new Error("No data received from the API");
         }
