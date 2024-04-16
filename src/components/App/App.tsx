@@ -17,11 +17,11 @@ import { Image } from "./App.types";
 interface ImageData {
   total_pages: number;
   total: number;
-  results: [];
+  results: Image[];
 }
 
 function App() {
-  const [images, setImages] = useState<[]>([]); // Стан для зберігання списку зображень
+  const [images, setImages] = useState<Image[]>([]); // Стан для зберігання списку зображень
   const [page, setPage] = useState<number>(1); // Стан для зберігання поточної сторінки результатів
   const [totalPages, setTotalPages] = useState<number>(1); // Стан для зберігання загальної кількості сторінок результатів
   const [search, setSearch] = useState<string>(""); // Стан для зберігання поточного пошукового запиту
@@ -45,7 +45,7 @@ function App() {
       setSearch(searchQuery);
 
       const dataImg: ImageData | undefined = await getImagesUnplash(searchQuery, 1);
-
+      console.log(dataImg);
       if (!dataImg) {
         throw new Error("No data received from the API");
       }
@@ -80,7 +80,7 @@ function App() {
       const nextPage = page + 1;
       const dataImages: ImageData | undefined = await getImagesUnplash(search, nextPage);
 
-      setImages((prevImages: []): [] => {
+      setImages((prevImages: Image[]): Image[] => {
         if (!dataImages) {
           throw new Error("No data received from the API");
         }
